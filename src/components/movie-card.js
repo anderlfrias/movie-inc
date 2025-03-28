@@ -38,7 +38,7 @@ const MovieCard = ({ movie }) => {
           </Text>
           <Text style={{ color: "#fff" }}>Estreno: {movie.releaseDate}</Text>
           <Text style={{ color: "#fff" }}>
-            Calificación: {movie.vote.average}/10
+            Calificación: {movie.vote.average}/10 ({movie.vote.count} votos)
           </Text>
         </View>
       </View>

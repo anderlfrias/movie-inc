@@ -1,15 +1,9 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import ScreenLayout from "../components/screen-layout";
 
 export default function Search() {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#000",
-        paddingTop: 20,
-        paddingBottom: 20,
-      }}
-    >
+    <ScreenLayout>
       <Text
         style={{
           color: "#fff",
@@ -19,6 +13,6 @@ export default function Search() {
       >
         Search movies
       </Text>
-    </View>
+    </ScreenLayout>
   );
 }

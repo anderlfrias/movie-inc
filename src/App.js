@@ -1,14 +1,15 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { useMovies } from "./hooks/useMovies";
 import MovieCard from "./components/movie-card";
 import { Link } from "expo-router";
+import ScreenLayout from "./components/screen-layout";
 
 export default function App() {
   const { movies, loading, error } = useMovies();
 
   if (error) {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1, backgroundColor: "#000", padding: 20 }}>
         <Text style={{ color: "#fff" }}>{error}</Text>
       </View>
     );
@@ -16,34 +17,18 @@ export default function App() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={{ color: "#fff" }}>Loading...</Text>
-      </View>
+      <ActivityIndicator color={"#fff"} size="large" style={{ flex: 1 }} />
     );
   }
 
   return (
-    <>
-      <View>
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 24,
-            fontWeight: "bold",
-            paddingVertical: 20,
-          }}
-        >
-          Movies Inc.
-        </Text>
-      </View>
-
+    <ScreenLayout>
       <Link href={"/search"} asChild>
         <Text
           style={{
             color: "#fff",
             fontSize: 16,
             fontWeight: "bold",
-            paddingVertical: 20,
           }}
         >
           Go to Search
@@ -55,29 +40,6 @@ export default function App() {
         // numColumns={3}
         keyExtractor={(item) => item.id.toString()}
       />
-    </>
+    </ScreenLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  movieItem: {
-    flexDirection: "row",
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  poster: {
-    width: 100,
-    height: 150,
-    resizeMode: "cover",
-  },
-  movieInfo: {
-    marginLeft: 10,
-    flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-});
