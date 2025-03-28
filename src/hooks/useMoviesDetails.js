@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { getMovieDetails } from "../api/tmdb";
 import { POSTER_URL } from "../constants";
+import { getMovieDetails } from "../api/movie";
 
 function mapMovieDetailData(movie) {
   return {
@@ -54,15 +54,17 @@ export function useMovieDetails(movieId) {
   const fetchMovieDetails = useCallback(async () => {
     setLoading(true);
     setError(null);
-    try {
-      const rawData = await getMovieDetails(movieId);
-      setMovie(mapMovieDetailData(rawData));
-    } catch (err) {
-      setError("Error al cargar los detalles de la película");
-      console.error(err);
-    } finally {
-      setLoading(false);
+
+    const resp = await getMovieDetails(movieId);
+
+    if (resp.success) {
+      const mappedMovie = mapMovieDetailData(resp.data);
+      setMovie(mappedMovie);
     }
+    else {
+      setError(resp.error.toString());
+    }
+    setLoading(false);
   }, [movieId]);
 
   useEffect(() => {

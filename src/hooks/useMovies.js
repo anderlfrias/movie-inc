@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getNowPlayingMovies } from "../api/tmdb";
 import { POSTER_URL } from "../constants";
+import { getNowPlayingMovies } from "../api/movie";
 
 function mapMovieData(movie) {
   return {
@@ -37,20 +37,18 @@ export function useMovies() {
   const fetchMovies = async () => {
     setLoading(true);
     setError(null);
-    try {
-      const moviesData = await getNowPlayingMovies();
 
-      const mappedMovies = moviesData
+    const resp = await getNowPlayingMovies();
+    if (resp.success) {
+      const mappedMovies = resp.data.results
         .map(mapMovieData)
         .sort((a, b) => a.title.localeCompare(b.title));
 
       setMovies(mappedMovies);
-    } catch (err) {
-      setError("Error al cargar las películas");
-      console.error(err);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(resp.error.toString());
     }
+    setLoading(false);
   };
 
   useEffect(() => {
