@@ -1,5 +1,6 @@
-import { getMovieDetails } from '../api/tmdb';
-import { POSTER_URL } from '../constants';
+import { useCallback, useEffect, useState } from "react";
+import { getMovieDetails } from "../api/tmdb";
+import { POSTER_URL } from "../constants";
 
 function mapMovieDetailData(movie) {
   return {
@@ -9,7 +10,7 @@ function mapMovieDetailData(movie) {
     releaseDate: movie.release_date,
     year: new Date(movie.release_date).getFullYear(),
     language: movie.original_language,
-    overview: movie.overview || '',
+    overview: movie.overview || "",
     vote: {
       average: movie.vote_average,
       count: movie.vote_count,
@@ -34,9 +35,7 @@ function mapMovieDetailData(movie) {
       id: actor.id,
       name: actor.name,
       character: actor.character,
-      profile: actor.profile_path
-        ? `${POSTER_URL}${actor.profile_path}`
-        : null,
+      profile: actor.profile_path ? `${POSTER_URL}${actor.profile_path}` : null,
     })),
     crew: movie.credits.crew.map((member) => ({
       id: member.id,
@@ -52,23 +51,23 @@ export function useMovieDetails(movieId) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMovieDetails = async () => {
+  const fetchMovieDetails = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const rawData = await getMovieDetails(movieId);
       setMovie(mapMovieDetailData(rawData));
     } catch (err) {
-      setError('Error al cargar los detalles de la película');
+      setError("Error al cargar los detalles de la película");
       console.error(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [movieId]);
 
   useEffect(() => {
     if (movieId) fetchMovieDetails();
-  }, [movieId]);
+  }, [movieId, fetchMovieDetails]);
 
   return { movie, loading, error, refetch: fetchMovieDetails };
 }

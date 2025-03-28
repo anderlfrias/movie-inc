@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { getNowPlayingMovies } from '../api/tmdb';
-import { POSTER_URL } from '../constants';
+import { useState, useEffect } from "react";
+import { getNowPlayingMovies } from "../api/tmdb";
+import { POSTER_URL } from "../constants";
 
 function mapMovieData(movie) {
   return {
@@ -9,23 +9,23 @@ function mapMovieData(movie) {
     originalTitle: movie.original_title,
     releaseDate: movie.release_date,
     language: movie.original_language,
-    overview: movie.overview || '',
+    overview: movie.overview || "",
     vote: {
       average: movie.vote_average,
-      count: movie.vote_count
+      count: movie.vote_count,
     },
     poster: {
       path: movie.poster_path,
-      url: `${POSTER_URL}${movie.poster_path}`
+      url: `${POSTER_URL}${movie.poster_path}`,
     },
     backdrop: {
       path: movie.backdrop_path,
-      url: `${POSTER_URL}${movie.backdrop_path}`
+      url: `${POSTER_URL}${movie.backdrop_path}`,
     },
     genres: movie.genre_ids,
     popularity: movie.popularity,
     isAdult: movie.adult,
-    video: movie.video
+    video: movie.video,
   };
 }
 
@@ -40,13 +40,13 @@ export function useMovies() {
     try {
       const moviesData = await getNowPlayingMovies();
 
-      const mappedMovies = moviesData.map(mapMovieData).sort((a, b) =>
-        a.title.localeCompare(b.title)
-      );
+      const mappedMovies = moviesData
+        .map(mapMovieData)
+        .sort((a, b) => a.title.localeCompare(b.title));
 
       setMovies(mappedMovies);
     } catch (err) {
-      setError('Error al cargar las películas');
+      setError("Error al cargar las películas");
       console.error(err);
     } finally {
       setLoading(false);
