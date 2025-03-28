@@ -1,7 +1,8 @@
 import { useRouter } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
+import withAnimation from "../hocs/withAnimation";
 
-export default function MovieCard({ movie }) {
+const MovieCard = ({ movie }) => {
   const router = useRouter();
   return (
     <Pressable
@@ -43,4 +44,6 @@ export default function MovieCard({ movie }) {
       </View>
     </Pressable>
   );
-}
+};
+
+export default withAnimation(MovieCard);
