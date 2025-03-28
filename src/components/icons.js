@@ -7,3 +7,7 @@ export const HomeIcon = (props) => (
 export const SearchIcon = (props) => (
   <AntDesign name="search1" size={24} color="white" {...props} />
 );
+
+export const FavoriteIcon = (props) => (
+  <AntDesign name="hearto" size={24} color="white" {...props} />
+);

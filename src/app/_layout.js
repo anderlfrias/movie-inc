@@ -1,22 +1,28 @@
 import { Stack } from "expo-router";
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text, View } from "react-native";
+import { FavoriteIcon, SearchIcon } from "../components/icons";
 
 export default function Layout() {
-  const insets = useSafeAreaInsets();
   return (
     <View style={{ flex: 1, backgroundColor: "#000" }}>
       <Stack
         screenOptions={{
           headerStyle: {
             backgroundColor: "#000",
-            paddingTop: insets.top,
           },
-          headerTintColor: "#fff",
-          headerTitle: "Movies Inc.",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
+          headerTitle: "",
+          // Aqui se define el logo, pero en este caso solo usare el nombre: Movies Inc.
+          headerLeft: () => (
+            <Text style={{ color: "#fff", fontSize: 24, fontWeight: 600 }}>
+              Movies Inc.
+            </Text>
+          ),
+          headerRight: () => (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <SearchIcon />
+              <FavoriteIcon />
+            </View>
+          ),
         }}
       />
     </View>
