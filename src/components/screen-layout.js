@@ -1,6 +1,12 @@
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
-export default function ScreenLayout({ children }) {
+export default function ScreenLayout({ children, loading }) {
+  if (loading) {
+    return (
+      <ActivityIndicator color={"#fff"} size="large" style={{ flex: 1 }} />
+    );
+  }
+
   return (
     <View
       style={{
