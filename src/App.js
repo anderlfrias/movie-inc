@@ -1,29 +1,9 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useMovies } from "./hooks/useMovies";
+import MovieCard from "./components/movie-card";
 
 export default function App() {
   const { movies, loading, error } = useMovies();
-
-  const renderMovie = ({ item: movie }) => (
-    <Pressable
-      style={styles.movieItem}
-      onPress={() => console.log(`Selected movie: ${movie}`)}
-    >
-      <Image source={{ uri: movie.poster.url }} style={styles.poster} />
-      <View style={styles.movieInfo}>
-        <Text style={styles.title}>{movie.title}</Text>
-        <Text>Estreno: {movie.releaseDate}</Text>
-        <Text>Calificación: {movie.vote.average}/10</Text>
-      </View>
-    </Pressable>
-  );
 
   if (error) {
     return (
@@ -44,7 +24,9 @@ export default function App() {
   return (
     <FlatList
       data={movies}
-      renderItem={renderMovie}
+      renderItem={({ item, key }) => (
+        <MovieCard key={key} movie={item} onPress={() => console.log(item)} />
+      )}
       keyExtractor={(movie) => movie.id.toString()}
     />
   );
