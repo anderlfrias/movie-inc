@@ -12,6 +12,7 @@ export default function Layout() {
         backgroundColor: "#000",
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
+        paddingHorizontal: 16,
       }}
     >
       <StatusBar

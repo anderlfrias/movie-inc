@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useMovies } from "./hooks/useMovies";
 import MovieCard from "./components/movie-card";
+import { Link } from "expo-router";
 
 export default function App() {
   const { movies, loading, error } = useMovies();
@@ -22,13 +23,39 @@ export default function App() {
   }
 
   return (
-    <FlatList
-      data={movies}
-      renderItem={({ item, key }) => (
-        <MovieCard key={key} movie={item} onPress={() => console.log(item)} />
-      )}
-      keyExtractor={(movie) => movie.id.toString()}
-    />
+    <>
+      <View>
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: 24,
+            fontWeight: "bold",
+            paddingVertical: 20,
+          }}
+        >
+          Movies Inc.
+        </Text>
+      </View>
+
+      <Link href={"/search"} asChild>
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: 16,
+            fontWeight: "bold",
+            paddingVertical: 20,
+          }}
+        >
+          Go to Search
+        </Text>
+      </Link>
+      <FlatList
+        data={movies}
+        renderItem={({ item, key }) => <MovieCard key={key} movie={item} />}
+        // numColumns={3}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </>
   );
 }
 
