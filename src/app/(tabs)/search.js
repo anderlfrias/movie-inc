@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import ScreenLayout from "../components/screen-layout";
+import ScreenLayout from "../../components/screen-layout";
 
 export default function Search() {
   return (

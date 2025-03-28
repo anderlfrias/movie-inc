@@ -20,7 +20,6 @@ export default function MovieDetails() {
   const [userRating, setUserRating] = useState(0);
 
   const handleRating = (rating) => {
-    console.log(`Calificación seleccionada: ${rating}`);
     setUserRating(rating);
   };
 
@@ -43,20 +42,17 @@ export default function MovieDetails() {
     <ScreenLayout>
       <Stack.Screen
         options={{
-          headerTitle: movie.title,
+          headerTitle: movie.title + id,
         }}
       />
       <ScrollView>
-        {/* Póster con sombra */}
         <View style={styles.posterContainer}>
           <Image source={{ uri: movie.poster.url }} style={styles.poster} />
         </View>
 
-        {/* Título y Año */}
         <Text style={styles.title}>{movie.title}</Text>
         <Text style={styles.year}>{movie.year}</Text>
 
-        {/* Información Principal */}
         <View style={styles.infoCard}>
           <Text style={styles.sectionTitle}>Géneros</Text>
           <Text style={styles.text}>
@@ -73,7 +69,6 @@ export default function MovieDetails() {
           </Text>
         </View>
 
-        {/* Sistema de Votación (FF-3) */}
         <View style={styles.ratingCard}>
           <Text style={styles.sectionTitle}>Tu Calificación</Text>
           <View style={styles.ratingContainer}>
@@ -92,11 +87,10 @@ export default function MovieDetails() {
           </View>
         </View>
 
-        {/* Lista de Actores */}
         <View style={styles.actorsCard}>
           <Text style={styles.sectionTitle}>Actores</Text>
           <FlatList
-            data={movie.cast.slice(0, 10)} // Limitamos a 10 actores
+            data={movie.cast} // Limitamos a 10 actores
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.actorItem}>
