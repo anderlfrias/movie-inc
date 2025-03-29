@@ -60,8 +60,7 @@ export function useMovieDetails(movieId) {
     if (resp.success) {
       const mappedMovie = mapMovieDetailData(resp.data);
       setMovie(mappedMovie);
-    }
-    else {
+    } else {
       setError(resp.error.toString());
     }
     setLoading(false);

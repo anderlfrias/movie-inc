@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ScreenLayout from "../components/screen-layout";
-import { useMovieDetails } from "../hooks/useMoviesDetails";
 import { useState } from "react";
-import DefaultActorIcon from "../assets/favicon.png";
+import { useMovieDetails } from "../../hooks/useMoviesDetails";
+import ScreenLayout from "../../components/screen-layout";
+import DefaultActorIcon from "../../assets/favicon.png";
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
@@ -42,7 +42,19 @@ export default function MovieDetails() {
     <ScreenLayout>
       <Stack.Screen
         options={{
-          headerTitle: movie.title + id,
+          headerTitle: movie.title,
+          headerStyle: {
+            backgroundColor: "#000",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          // eslint-disable-next-line prettier/prettier
+          headerLeft: () => { },
+          // eslint-disable-next-line prettier/prettier
+          headerRight: () => { },
+          headerBackTitleVisible: false,
         }}
       />
       <ScrollView>

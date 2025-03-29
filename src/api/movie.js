@@ -12,5 +12,4 @@ export const getMovieDetails = async (movieId) => {
     path: `/movie/${movieId}`,
     params: { language: "es-Es", append_to_response: "credits" },
   });
-}
-
+};

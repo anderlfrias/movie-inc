@@ -1,12 +1,12 @@
 import { useRouter } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
-import withAnimation from "../hocs/withAnimation";
+import withAnimation from "../../hocs/withAnimation";
 
 const MovieCard = ({ movie }) => {
   const router = useRouter();
   return (
     <Pressable
-      onPress={() => router.push(`/${movie.id}`)}
+      onPress={() => router.push(`/movies/${movie.id}`)}
       style={({ pressed }) => [
         {
           backgroundColor: pressed ? "#444" : "#222",

@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import ScreenLayout from "../components/screen-layout";
 import { FlatList, Text } from "react-native";
 import { useMovies } from "../hooks/useMovies";
-import MovieCard from "../components/movie-card";
+import MovieCard from "../components/movie/card";
 
 export default function HomeScreen() {
   const { movies, loading, error } = useMovies();

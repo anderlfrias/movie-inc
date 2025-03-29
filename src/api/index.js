@@ -31,7 +31,7 @@ export const apiRequest = async (options) => {
       return {
         success: true,
         data,
-        message: '',
+        message: "",
         error: null,
       };
     } else {
@@ -41,8 +41,8 @@ export const apiRequest = async (options) => {
     return {
       success: false,
       data: null,
-      message: 'Error al realizar la solicitud',
+      message: "Error al realizar la solicitud",
       error: error,
     };
   }
-}
+};
