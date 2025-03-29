@@ -6,22 +6,16 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
 import { useMovieDetails } from "../../hooks/useMoviesDetails";
 import ScreenLayout from "../../components/screen-layout";
 import DefaultActorIcon from "../../assets/favicon.png";
+import MovieRating from "../../components/movie/rating";
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
   const { movie, loading } = useMovieDetails(id);
-  const [userRating, setUserRating] = useState(0);
-
-  const handleRating = (rating) => {
-    setUserRating(rating);
-  };
 
   if (loading) {
     return (
@@ -81,7 +75,8 @@ export default function MovieDetails() {
           </Text>
         </View>
 
-        <View style={styles.ratingCard}>
+        <MovieRating movieId={id} />
+        {/* <View style={styles.ratingCard}>
           <Text style={styles.sectionTitle}>Tu Calificación</Text>
           <View style={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((star) => (
@@ -97,7 +92,7 @@ export default function MovieDetails() {
               </TouchableOpacity>
             ))}
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.actorsCard}>
           <Text style={styles.sectionTitle}>Actores</Text>
@@ -147,7 +142,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#333",
+    color: "#fff",
     textAlign: "center",
     marginBottom: 5,
   },
