@@ -48,25 +48,38 @@ export function mapMovieDetailData(movie) {
       path: movie.backdrop_path,
       url: movie.backdrop_path ? `${POSTER_URL}${movie.backdrop_path}` : null,
     },
-    genres: movie.genres.map((genre) => ({
-      id: genre.id,
-      name: genre.name,
-    })),
+    genres: movie.genres,
     popularity: movie.popularity,
     isAdult: movie.adult,
     video: movie.video,
     runtime: movie.runtime,
-    cast: movie.credits.cast.map((actor) => ({
-      id: actor.id,
-      name: actor.name,
-      character: actor.character,
-      profile: actor.profile_path ? `${POSTER_URL}${actor.profile_path}` : null,
-    })),
-    crew: movie.credits.crew.map((member) => ({
-      id: member.id,
-      name: member.name,
-      department: member.department,
-      job: member.job,
-    })),
+    actors: movie.credits.cast,
+    crew: movie.credits.crew,
   };
 }
+
+export const mapMovieActors = (actors) => {
+  return actors.map((actor) => ({
+    id: actor.id,
+    name: actor.name,
+    character: actor.character,
+    profile: actor.profile_path ? `${POSTER_URL}${actor.profile_path}` : null,
+  }));
+};
+
+export const mapMovieCrew = (crew) => {
+  return crew.map((member) => ({
+    id: member.id,
+    name: member.name,
+    department: member.department,
+    job: member.job,
+    profile: member.profile_path ? `${POSTER_URL}${member.profile_path}` : null,
+  }));
+};
+
+export const mapMovieGenres = (genres) => {
+  return genres.map((genre) => ({
+    id: genre.id,
+    name: genre.name,
+  }));
+};

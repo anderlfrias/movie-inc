@@ -7,7 +7,16 @@ export default function useAuth() {
     const guestSession = await AsyncStorage.getItem("guestSession");
 
     if (guestSession) {
-      return JSON.parse(guestSession);
+      // Si ya tengo un guest session, lo devuelvo
+      // Reviso que no haya expirado
+      const guestSessionData = JSON.parse(guestSession);
+      const expirationDate = new Date(guestSessionData.expires_at);
+      const currentDate = new Date();
+      if (expirationDate > currentDate) {
+        return guestSessionData;
+      }
+      // Si ha expirado, lo borro
+      await AsyncStorage.removeItem("guestSession");
     }
     // Si no tengo un guest session, lo creo
     const response = await createGuestSession();
@@ -22,6 +31,6 @@ export default function useAuth() {
   };
 
   return {
-    guestSession: getGuestSession(),
+    getGuestSession,
   };
 }

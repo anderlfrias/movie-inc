@@ -12,10 +12,32 @@ import { useMovieDetails } from "../../hooks/useMoviesDetails";
 import ScreenLayout from "../../components/screen-layout";
 import DefaultActorIcon from "../../assets/favicon.png";
 import MovieRating from "../../components/movie/rating";
+import useAuth from "../../hooks/useAuth";
+import { rateMovieAsGuest } from "../../api/movie";
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
-  const { movie, loading } = useMovieDetails(id);
+  const { getGuestSession } = useAuth();
+  const { movie, loading, actors, refetch } = useMovieDetails(id);
+
+  const rateMovie = async (rating) => {
+    const guestSession = await getGuestSession();
+    const resp = await rateMovieAsGuest(
+      id,
+      rating,
+      guestSession.guest_session_id,
+    );
+    console.log("rateMovie", resp);
+
+    if (resp.success) {
+      console.log("Calificación exitosa");
+      refetch();
+    }
+    if (resp.error) {
+      console.log("Error al calificar la película", resp.error);
+    }
+    return resp;
+  };
 
   if (loading) {
     return (
@@ -32,6 +54,7 @@ export default function MovieDetails() {
       </ScreenLayout>
     );
   }
+
   return (
     <ScreenLayout>
       <Stack.Screen
@@ -75,29 +98,12 @@ export default function MovieDetails() {
           </Text>
         </View>
 
-        <MovieRating movieId={id} />
-        {/* <View style={styles.ratingCard}>
-          <Text style={styles.sectionTitle}>Tu Calificación</Text>
-          <View style={styles.ratingContainer}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <TouchableOpacity key={star} onPress={() => handleRating(star)}>
-                <Text
-                  style={[
-                    styles.star,
-                    { color: star <= userRating ? "#FFD700" : "#D3D3D3" }, // Dorado si seleccionado, gris si no
-                  ]}
-                >
-                  ★
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View> */}
+        <MovieRating movieId={id} onRateMovie={rateMovie} />
 
         <View style={styles.actorsCard}>
           <Text style={styles.sectionTitle}>Actores</Text>
           <FlatList
-            data={movie.cast} // Limitamos a 10 actores
+            data={actors} // Limitamos a 10 actores
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.actorItem}>
@@ -193,5 +199,14 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 10,
+  },
+  ratingText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  voteCount: {
+    fontSize: 14,
+    color: "#666",
   },
 });

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { getMovieDetails } from "../api/movie";
-import { mapMovieDetailData } from "../utils/mappers";
+import { mapMovieActors, mapMovieDetailData } from "../utils/mappers";
 
 export function useMovieDetails(movieId) {
   const [movie, setMovie] = useState(null);
@@ -26,5 +26,11 @@ export function useMovieDetails(movieId) {
     if (movieId) fetchMovieDetails();
   }, [movieId, fetchMovieDetails]);
 
-  return { movie, loading, error, refetch: fetchMovieDetails };
+  return {
+    movie,
+    loading,
+    error,
+    refetch: fetchMovieDetails,
+    actors: mapMovieActors(movie?.actors || []),
+  };
 }
