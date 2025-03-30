@@ -1,18 +1,18 @@
 import { Link } from "expo-router";
 import ScreenLayout from "../components/screen-layout";
-import { FlatList, Pressable, Text } from "react-native";
+import { FlatList, Text } from "react-native";
 import { useMovies } from "../hooks/useMovies";
 import MovieCard from "../components/movie/card";
-import useAuth from "../hooks/useAuth";
 
 export default function HomeScreen() {
   const { movies, loading, error } = useMovies();
-  const { authenticateUser, getSession } = useAuth();
+  // TODO: Implement authentication flow
+  // const { getSession } = useAuth();
 
-  const onAuthenticate = async () => {
-    // await authenticateUser();
-    console.log("User authenticated", getSession());
-  };
+  // const onAuthenticate = async () => {
+  //   // await authenticateUser();
+  //   console.log("User authenticated", getSession());
+  // };
 
   if (error) {
     return (
@@ -28,7 +28,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenLayout>
-      <Link href={"/search"} asChild>
+      {/* <Link href={"/search"} asChild>
         <Text
           style={{
             color: "#fff",
@@ -38,9 +38,9 @@ export default function HomeScreen() {
         >
           Go to Search
         </Text>
-      </Link>
+      </Link> */}
 
-      <Pressable onPress={onAuthenticate}>
+      {/* <Pressable onPress={onAuthenticate}>
         <Text
           style={{
             color: "#fff",
@@ -56,7 +56,14 @@ export default function HomeScreen() {
         >
           Authenticate
         </Text>
-      </Pressable>
+      </Pressable> */}
+      <Text
+        style={{ color: "#fff", fontSize: 20, fontWeight: "bold" }}
+        accessibilityRole="header"
+      >
+        En Cartelera
+      </Text>
+
       <FlatList
         data={movies}
         renderItem={({ item, key }) => <MovieCard key={key} movie={item} />}

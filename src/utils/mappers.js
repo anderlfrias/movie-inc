@@ -6,10 +6,11 @@ export function mapMovieData(movie) {
     title: movie.title,
     originalTitle: movie.original_title,
     releaseDate: movie.release_date,
+    year: new Date(movie.release_date).getFullYear(),
     language: movie.original_language,
     overview: movie.overview || "",
     vote: {
-      average: movie.vote_average,
+      average: movie.vote_average.toFixed(1),
       count: movie.vote_count,
     },
     poster: {

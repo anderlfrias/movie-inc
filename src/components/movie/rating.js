@@ -5,15 +5,12 @@ export default function MovieRating({ onRateMovie }) {
   const [userRating, setUserRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  console.log("MovieRating", userRating);
 
   const handleRating = async (rating) => {
-    console.log("handleRating", rating);
     setLoading(true);
     setUserRating(rating);
     const resp = await onRateMovie(rating);
 
-    console.log("resp", resp);
     if (resp.success) {
       setUserRating(rating);
     } else {

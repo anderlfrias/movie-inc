@@ -11,3 +11,7 @@ export const SearchIcon = (props) => (
 export const FavoriteIcon = (props) => (
   <AntDesign name="hearto" size={24} color="white" {...props} />
 );
+
+export const StarIcon = (props) => (
+  <AntDesign name="star" size={24} color="white" {...props} />
+);

@@ -10,7 +10,7 @@ export const getNowPlayingMovies = async () => {
 export const getMovieDetails = async (movieId) => {
   return await apiRequest({
     path: `/movie/${movieId}`,
-    params: { language: "es-Es", append_to_response: "credits" },
+    params: { language: "es-ES", append_to_response: "credits" },
   });
 };
 

@@ -27,10 +27,8 @@ export default function MovieDetails() {
       rating,
       guestSession.guest_session_id,
     );
-    console.log("rateMovie", resp);
 
     if (resp.success) {
-      console.log("Calificación exitosa");
       refetch();
     }
     if (resp.error) {

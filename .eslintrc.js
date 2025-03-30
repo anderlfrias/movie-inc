@@ -5,5 +5,8 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
   },
+  globals: {
+    Intl: "readonly",
+  },
   ignorePatterns: ["/dist/*"],
 };
