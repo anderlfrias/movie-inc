@@ -1,73 +1,43 @@
-import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { StarIcon } from "../icons";
 
-export default function MovieRating({ onRateMovie }) {
-  const [userRating, setUserRating] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleRating = async (rating) => {
-    setLoading(true);
-    setUserRating(rating);
-    const resp = await onRateMovie(rating);
-
-    if (resp.success) {
-      setUserRating(rating);
-    } else {
-      setError(resp.error.toString());
-    }
-    setLoading(false);
-  };
+const Rating = ({ average, count, showVotes }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tu Calificación</Text>
-      <View style={styles.ratingContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Pressable key={star} onPress={() => handleRating(star)}>
-            <Text
-              style={[
-                styles.star,
-                { color: star <= userRating ? "#FFD700" : "#D3D3D3" }, // Dorado si seleccionado, gris si no
-              ]}
-            >
-              ★
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-
-      {error && (
-        <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
-      )}
-      {loading && (
-        <Text style={{ color: "#fff", textAlign: "center" }}>
-          Calificando...
-        </Text>
-      )}
+      <StarIcon name="star" color={"#FFD700"} size={16} style={styles.star} />
+      <Text style={styles.rating}>
+        {average}
+        <Text style={styles.outOfTen}>/10</Text>
+        {showVotes && <Text style={styles.votes}> ({count} votos)</Text>}
+      </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
-  title: {
-    fontSize: 20,
+  rating: {
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
     color: "#fff",
   },
-  ratingContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: 10,
+  outOfTen: {
+    color: "#fff",
+    fontWeight: "400",
+    fontSize: 12,
+  },
+  votes: {
+    color: "#9ca3af",
+    fontWeight: "400",
+    fontSize: 12,
   },
   star: {
-    fontSize: 30,
-    color: "#FFD700", // Dorado para las estrellas
-    marginHorizontal: 5,
+    marginRight: 5,
   },
 });
+
+export default Rating;

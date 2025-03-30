@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, Pressable, FlatList } from "react-native";
 
-const GenreTag = ({ genre, color = "#9ca3af" }) => {
+const GenreTag = ({ genre, color = "#FFD700" }) => {
   return (
     <Pressable
       style={({ pressed }) => [

@@ -2,8 +2,8 @@ import { useRouter } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import withAnimation from "../../hocs/withAnimation";
 import { formatReleaseDate } from "../../utils/date";
-import { StarIcon } from "../icons";
 import { SharedElement } from "react-native-shared-element";
+import Rating from "./rating";
 
 const MovieCard = ({ movie }) => {
   const router = useRouter();
@@ -31,12 +31,7 @@ const MovieCard = ({ movie }) => {
             {formatReleaseDate(movie.releaseDate)}
           </Text>
 
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.star}>
-              <StarIcon color={"#FFD700"} size={16} />
-            </Text>
-            <Text style={styles.rating}>{movie.vote.average}</Text>
-          </View>
+          <Rating average={movie.vote.average} count={movie.vote.count} />
         </View>
       </View>
     </Pressable>
@@ -95,14 +90,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#d1d5db",
     marginBottom: 4,
-  },
-  rating: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  star: {
-    marginRight: 5,
-    color: "#FFD700",
   },
 });

@@ -1,47 +1,22 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import useAuth from "../hooks/useAuth";
 import { useMovieDetails } from "../hooks/useMoviesDetails";
-import { rateMovieAsGuest } from "../api/movie";
 import ScreenLayout from "../components/screen-layout";
-import MovieRating from "../components/movie/rating";
-import DefaultActorIcon from "../assets/favicon.png";
 import { SharedElement } from "react-native-shared-element";
-import { StarIcon } from "../components/icons";
 import GenresList from "../components/movie/genres";
 import ActorList from "../components/movie/actors";
+import Rating from "../components/movie/rating";
 
 export default function MovieDetailsScreen() {
   const { id } = useLocalSearchParams();
-  const { getGuestSession } = useAuth();
-  const { movie, loading, refetch } = useMovieDetails(id);
-
-  const rateMovie = async (rating) => {
-    const guestSession = await getGuestSession();
-    const resp = await rateMovieAsGuest(
-      id,
-      rating,
-      guestSession.guest_session_id,
-    );
-
-    if (resp.success) {
-      refetch();
-    }
-    if (resp.error) {
-      console.log("Error al calificar la película", resp.error);
-    }
-    return resp;
-  };
-
-  // console.log("MovieDetailsScreen", movie?.actors);
+  const { movie, loading } = useMovieDetails(id);
 
   if (loading) {
     return (
@@ -113,13 +88,11 @@ export default function MovieDetailsScreen() {
               <Text style={styles.year} numberOfLines={1}>
                 {movie.year}
               </Text>
-
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={styles.star}>
-                  <StarIcon color={"#FFD700"} size={16} />
-                </Text>
-                <Text style={styles.rating}>{movie.vote.average}</Text>
-              </View>
+              <Rating
+                average={movie.vote.average}
+                count={movie.vote.count}
+                showVotes
+              />
             </View>
           </View>
 
@@ -161,16 +134,6 @@ export default function MovieDetailsScreen() {
             <ActorList actors={movie.actors} />
           </View>
         </View>
-
-        {/* <Text
-          style={{
-            color: "#fff",
-            fontFamily: "monospace",
-            fontSize: 16,
-          }}
-        >
-          {JSON.stringify(movie.actors, null, 2)}{" "}
-        </Text> */}
       </ScrollView>
     </ScreenLayout>
   );

@@ -21,11 +21,6 @@ const ActorList = ({ actors }) => {
     </View>
   );
 
-  const handlePress = (actor) => {
-    // Aquí puedes manejar la lógica cuando se presiona un actor (por ejemplo, navegar a una pantalla de detalles)
-    console.log("Actor presionado:", actor);
-  };
-
   return (
     <FlatList
       data={actors}
@@ -43,7 +38,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   card: {
-    backgroundColor: "#1F1F1F",
+    backgroundColor: "#222", // #1F1F1F
     borderRadius: 10,
     marginRight: 12,
     padding: 10,

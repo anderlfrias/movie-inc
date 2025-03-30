@@ -1,4 +1,5 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export const HomeIcon = (props) => (
   <AntDesign name="home" size={24} color="white" {...props} />
@@ -13,5 +14,5 @@ export const FavoriteIcon = (props) => (
 );
 
 export const StarIcon = (props) => (
-  <AntDesign name="star" size={24} color="white" {...props} />
+  <FontAwesome name="star" size={24} color="white" {...props} />
 );
