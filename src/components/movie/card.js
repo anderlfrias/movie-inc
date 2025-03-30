@@ -3,6 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import withAnimation from "../../hocs/withAnimation";
 import { formatReleaseDate } from "../../utils/date";
 import { StarIcon } from "../icons";
+import { SharedElement } from "react-native-shared-element";
 
 const MovieCard = ({ movie }) => {
   const router = useRouter();
@@ -18,7 +19,9 @@ const MovieCard = ({ movie }) => {
     >
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: movie.poster.url }} style={styles.poster} />
+          <SharedElement id={`movie.${movie.id}.image`}>
+            <Image source={{ uri: movie.poster.url }} style={styles.poster} />
+          </SharedElement>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.title} numberOfLines={2}>

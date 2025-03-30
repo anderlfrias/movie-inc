@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { getMovieDetails } from "../api/movie";
-import { mapMovieActors, mapMovieDetailData } from "../utils/mappers";
+import { mapMovieDetailData } from "../utils/mappers";
 
 export function useMovieDetails(movieId) {
   const [movie, setMovie] = useState(null);
@@ -31,6 +31,5 @@ export function useMovieDetails(movieId) {
     loading,
     error,
     refetch: fetchMovieDetails,
-    actors: mapMovieActors(movie?.actors || []),
   };
 }
