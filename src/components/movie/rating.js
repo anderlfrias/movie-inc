@@ -5,7 +5,7 @@ import { StarIcon } from "../icons";
 const Rating = ({ average, count, showVotes }) => {
   return (
     <View style={styles.container}>
-      <StarIcon name="star" color={"#FFD700"} size={16} style={styles.star} />
+      <StarIcon color={"#FFD700"} size={16} style={styles.star} />
       <Text style={styles.rating}>
         {average}
         <Text style={styles.outOfTen}>/10</Text>

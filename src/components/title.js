@@ -1,9 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Title = ({ text, variant = "bar", color = "#FFD700" }) => {
+const Title = ({
+  text,
+  variant = "bar",
+  color = "#FFD700",
+  textStyle = {},
+  containerStyle = {},
+}) => {
   return (
-    <View style={[styles.container, variant === "bar" && styles.row]}>
+    <View
+      style={[
+        styles.container,
+        variant === "bar" && styles.row,
+        containerStyle,
+      ]}
+    >
       {variant === "highlight" && (
         <View
           style={[styles.highlight, { backgroundColor: color, opacity: 0.5 }]}
@@ -12,7 +24,7 @@ const Title = ({ text, variant = "bar", color = "#FFD700" }) => {
       {variant === "bar" && (
         <View style={[styles.bar, { backgroundColor: color }]} />
       )}
-      <Text style={[styles.title]}>{text}</Text>
+      <Text style={[styles.title, textStyle]}>{text}</Text>
       {variant === "underline" && (
         <View style={[styles.underline, { backgroundColor: color }]} />
       )}

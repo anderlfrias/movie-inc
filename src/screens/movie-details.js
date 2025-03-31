@@ -13,6 +13,7 @@ import { SharedElement } from "react-native-shared-element";
 import GenresList from "../components/movie/genres";
 import ActorList from "../components/movie/actors";
 import Rating from "../components/movie/rating";
+import RateMovie from "../components/movie/rate";
 
 export default function MovieDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -98,7 +99,7 @@ export default function MovieDetailsScreen() {
 
           <GenresList genres={movie.genres} />
 
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: 32 }}>
             <Text
               style={{
                 color: "#e5e7eb",
@@ -120,7 +121,11 @@ export default function MovieDetailsScreen() {
             </Text>
           </View>
 
-          <View>
+          <View style={{ marginBottom: 32 }}>
+            <RateMovie movieId={id} />
+          </View>
+
+          <View style={{ marginBottom: 32 }}>
             <Text
               style={{
                 color: "#e5e7eb",

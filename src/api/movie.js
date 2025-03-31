@@ -14,15 +14,25 @@ export const getMovieDetails = async (movieId) => {
   });
 };
 
-export const rateMovieAsGuest = async (movieId, rating, guestSessionId) => {
+export const apiGetMovieAccountStates = async (movieId, sessionId) => {
+  return await apiRequest({
+    path: `/movie/${movieId}/account_states`,
+    method: "GET",
+    params: {
+      session_id: sessionId,
+    },
+  });
+};
+
+export const apiRateMovie = async (movieId, rating, sessionId) => {
   return await apiRequest({
     path: `/movie/${movieId}/rating`,
     method: "POST",
     params: {
-      guest_session_id: guestSessionId,
+      session_id: sessionId,
     },
     body: {
-      value: rating * 2, // TMDB usa una escala de 0 a 10 y nosotros de 0 a 5
+      value: rating,
     },
   });
 };
