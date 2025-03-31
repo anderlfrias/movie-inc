@@ -7,28 +7,26 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
         headerTransparent: true,
-        tabBarStyle: { backgroundColor: "#000" },
+        tabBarStyle: { backgroundColor: "#000", height: 60, paddingTop: 10 },
         tabBarActiveTintColor: "#FFD700",
+        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
-          title: "Search",
           tabBarIcon: ({ color }) => <SearchIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="account"
         options={{
-          title: "Mi Cuenta",
           tabBarIcon: ({ color }) => <AccountIcon color={color} />,
         }}
       />
