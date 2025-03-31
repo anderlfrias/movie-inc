@@ -4,6 +4,7 @@ import * as WebBrowser from "expo-web-browser";
 import { TMDB_URL } from "../constants";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
+import { apiGetAccountBySessionId } from "../api/account";
 
 export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,9 +28,36 @@ export default function useAuth() {
 
     if (response.success) {
       await saveSession(response.data);
+      const resp = await apiGetAccountBySessionId(response.data.session_id);
+
+      console.log("resp", resp);
+
+      if (resp.success) {
+        await saveAccount(resp.data);
+      } else {
+        throw new Error("Error al obtener la cuenta del usuario");
+      }
+      return {
+        success: true,
+        message: "Sesión creada correctamente",
+        data: response.data,
+      };
     }
 
     return response;
+  };
+
+  const saveAccount = async (accountId) => {
+    await SecureStore.setItemAsync("account", JSON.stringify(accountId));
+  };
+
+  const getAccount = async () => {
+    const account = await SecureStore.getItemAsync("account");
+    if (account) {
+      const parsedAccount = JSON.parse(account);
+      return parsedAccount.id;
+    }
+    return null;
   };
 
   const saveSession = async (session) => {
@@ -91,6 +119,8 @@ export default function useAuth() {
     setLoading(false);
     setIsAuthenticated(false);
     setSessionId(null);
+    setAccountId(null);
+    setError(null);
   };
 
   useEffect(() => {
@@ -118,11 +148,24 @@ export default function useAuth() {
     getSessionId();
   }, []);
 
+  useEffect(() => {
+    const checkAcount = async () => {
+      setLoading(true);
+      const account = await getAccount();
+      if (account) {
+        setAccountId(account);
+      }
+      setLoading(false);
+    };
+    checkAcount();
+  }, []);
+
   return {
     authenticateUser,
     isAuthenticated,
     getSession,
     sessionId,
+    accountId,
     loading,
     logout,
     login,

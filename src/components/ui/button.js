@@ -1,6 +1,6 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet, View } from "react-native";
 
-export default function Button({ title, onPress, style }) {
+export default function Button({ title, onPress, style, icon, textStyle }) {
   return (
     <Pressable
       onPress={onPress}
@@ -10,7 +10,10 @@ export default function Button({ title, onPress, style }) {
         style, // Estilos adicionales desde props
       ]}
     >
-      <Text style={styles.text}>{title}</Text>
+      <View style={styles.content}>
+        {icon && <View style={styles.icon}>{icon}</View>}
+        <Text style={[styles.text, textStyle]}>{title}</Text>
+      </View>
     </Pressable>
   );
 }
@@ -31,5 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#000",
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginRight: 8, // Espaciado entre el icono y el texto
   },
 });

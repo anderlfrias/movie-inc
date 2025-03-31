@@ -2,6 +2,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import {
   ActivityIndicator,
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import ActorList from "../components/movie/actors";
 import Rating from "../components/movie/rating";
 import RateMovie from "../components/movie/rate";
 import MovieRecomendations from "../components/movie/recomendations";
+import AddMovieToFavorite from "../components/movie/add-favorite";
 
 export default function MovieDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -99,6 +101,11 @@ export default function MovieDetailsScreen() {
           </View>
 
           <GenresList genres={movie.genres} />
+
+          <AddMovieToFavorite
+            movieId={id}
+            style={{ marginBottom: 32, marginTop: 16 }}
+          />
 
           <View style={{ marginBottom: 32 }}>
             <Text
