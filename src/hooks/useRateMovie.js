@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiGetMovieAccountStates, apiRateMovie } from "../api/movie";
 import useAuth from "./useAuth";
+import { Alert } from "react-native";
 
 export function useRateMovie(movieId) {
   const { getSession } = useAuth();
@@ -39,6 +40,13 @@ export function useRateMovie(movieId) {
     const sessionId = await getSession();
     if (!sessionId) {
       setLoading(false);
+      // Mostrar alerta de que no hay sesión activa
+      Alert.alert(
+        "No hay sesión activa",
+        "Por favor, inicia sesión para calificar la película.",
+        [{ text: "OK" }],
+        { cancelable: false }
+      );
       return;
     }
     const resp = await apiRateMovie(movieId, rating, sessionId);
