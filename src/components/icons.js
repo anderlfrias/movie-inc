@@ -16,3 +16,15 @@ export const FavoriteIcon = (props) => (
 export const StarIcon = (props) => (
   <FontAwesome name="star" size={24} color="white" {...props} />
 );
+
+export const AccountIcon = (props) => (
+  <AntDesign name="user" size={24} color="white" {...props} />
+);
+
+export const AddUserIcon = (props) => (
+  <AntDesign name="adduser" size={24} color="white" {...props} />
+);
+
+export const ErrorIcon = (props) => (
+  <AntDesign name="warning" size={24} color="white" {...props} />
+);

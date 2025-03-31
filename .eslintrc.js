@@ -7,6 +7,8 @@ module.exports = {
   },
   globals: {
     Intl: "readonly",
+    setTimeout: "readonly",
+    clearTimeout: "readonly",
   },
   ignorePatterns: ["/dist/*"],
 };
