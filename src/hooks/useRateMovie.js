@@ -45,7 +45,7 @@ export function useRateMovie(movieId) {
         "No hay sesión activa",
         "Por favor, inicia sesión para calificar la película.",
         [{ text: "OK" }],
-        { cancelable: false }
+        { cancelable: false },
       );
       return;
     }

@@ -42,4 +42,4 @@ export const apiGetMoviesRecomendatios = async (movieId) => {
     path: `/movie/${movieId}/recommendations`,
     params: { language: "es-ES" },
   });
-}
+};

@@ -6,11 +6,11 @@ import {
   Text,
   View,
 } from "react-native";
-import { apiGetAccountBySessionId } from "../../api/auth";
 import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { POSTER_URL } from "../../constants";
 import ErrorMessage from "../error-message";
+import { apiGetAccountBySessionId } from "../../api/account";
 
 export default function AccountDetails({ sessionId, onLogout }) {
   const [user, setUser] = useState(null);

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accountId, setAccountId] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

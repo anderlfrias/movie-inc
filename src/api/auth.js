@@ -21,13 +21,3 @@ export async function apiCreateSession(requestToken) {
     },
   });
 }
-
-export async function apiGetAccountBySessionId(sessionId) {
-  return await apiRequest({
-    path: `/account`,
-    method: "GET",
-    params: {
-      session_id: sessionId,
-    },
-  });
-}

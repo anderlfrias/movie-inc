@@ -49,9 +49,9 @@ export default function MovieDetailsScreen() {
             fontWeight: "bold",
           },
           // eslint-disable-next-line prettier/prettier
-          headerLeft: () => { },
+          headerLeft: () => {},
           // eslint-disable-next-line prettier/prettier
-          headerRight: () => { },
+          headerRight: () => {},
           headerBackTitleVisible: false,
         }}
       />

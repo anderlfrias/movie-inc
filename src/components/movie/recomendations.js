@@ -4,7 +4,7 @@ import Title from "../title";
 import MovieCard from "./card";
 
 export default function MovieRecomendations({ movieId, style }) {
-  const { movies, loading, error } = useRecomendations(movieId);
+  const { movies } = useRecomendations(movieId);
 
   return (
     <View style={style}>
@@ -14,5 +14,5 @@ export default function MovieRecomendations({ movieId, style }) {
         <MovieCard key={item.id} movie={item} />
       ))}
     </View>
-  )
+  );
 }

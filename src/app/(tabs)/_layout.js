@@ -1,5 +1,10 @@
 import { Tabs } from "expo-router";
-import { AccountIcon, HomeIcon, SearchIcon } from "../../components/icons";
+import {
+  AccountIcon,
+  FavoriteIcon,
+  HomeIcon,
+  SearchIcon,
+} from "../../components/icons";
 
 export default function TabsLayout() {
   return (
@@ -22,6 +27,12 @@ export default function TabsLayout() {
         name="search"
         options={{
           tabBarIcon: ({ color }) => <SearchIcon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="favorite"
+        options={{
+          tabBarIcon: ({ color }) => <FavoriteIcon color={color} />,
         }}
       />
       <Tabs.Screen
