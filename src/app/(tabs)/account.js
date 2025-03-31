@@ -1,13 +1,16 @@
 import ScreenLayout from "../../components/screen-layout";
 import useAuth from "../../hooks/useAuth";
 import SignUp from "../../components/account/signup";
-import { Text, View } from "react-native";
-import Button from "../../components/ui/button";
 import ErrorMessage from "../../components/error-message";
+import AccountDetails from "../../components/account/details";
 
 export default function Account() {
-  const { loading, login, logout, isAuthenticated, error } = useAuth();
-  console.log(error);
+  const { loading, login, isAuthenticated, error, sessionId, logout } =
+    useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <ScreenLayout loading={loading}>
@@ -20,18 +23,8 @@ export default function Account() {
         />
       )}
 
-      {isAuthenticated && (
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ color: "#FFF" }}>
-            Ya tienes una sesión iniciada. Puedes cerrar sesión o continuar.
-          </Text>
-
-          <Button
-            title="Cerrar sesión"
-            onPress={logout}
-            style={{ marginTop: 20 }}
-          />
-        </View>
+      {isAuthenticated && sessionId && (
+        <AccountDetails sessionId={sessionId} onLogout={handleLogout} />
       )}
       {!isAuthenticated && <SignUp onLogin={login} />}
     </ScreenLayout>

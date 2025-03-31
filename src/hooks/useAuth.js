@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiCreateRequestToken, apiCreateSession } from "../api/auth";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";

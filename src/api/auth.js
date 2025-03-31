@@ -6,12 +6,6 @@ export async function apiCreateRequestToken() {
   });
 }
 
-export async function apiCreateGuestSession() {
-  return await apiRequest({
-    path: "/authentication/guest_session/new",
-  });
-}
-
 export async function apiGetRequestToken() {
   return await apiRequest({
     path: "/authentication/token/new",
@@ -24,6 +18,16 @@ export async function apiCreateSession(requestToken) {
     method: "POST",
     body: {
       request_token: requestToken,
+    },
+  });
+}
+
+export async function apiGetAccountBySessionId(sessionId) {
+  return await apiRequest({
+    path: `/account`,
+    method: "GET",
+    params: {
+      session_id: sessionId,
     },
   });
 }
