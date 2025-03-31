@@ -1,56 +1,12 @@
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { useEffect, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { POSTER_URL } from "../../constants";
-import ErrorMessage from "../error-message";
-import { apiGetAccountBySessionId } from "../../api/account";
 
-export default function AccountDetails({ sessionId, onLogout }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      setLoading(true);
-      const resp = await apiGetAccountBySessionId(sessionId);
-      setLoading(false);
-      if (resp.success) {
-        setUser(resp.data);
-        setError(null);
-      } else {
-        setError(resp.message);
-      }
-    };
-
-    fetchUserInfo();
-  }, [sessionId]);
-
-  if (loading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color="#FFF" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <ErrorMessage
-        key={error}
-        message={error}
-        duration={3000}
-        style={{ marginBottom: 20 }}
-      />
-    );
-  }
+export default function AccountDetails({ account: user, sessionId, onLogout }) {
+  console.log("AccountDetails", {
+    user,
+    sessionId,
+  });
 
   return (
     <View>

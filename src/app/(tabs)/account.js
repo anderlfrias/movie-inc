@@ -1,32 +1,46 @@
 import ScreenLayout from "../../components/screen-layout";
-import useAuth from "../../hooks/useAuth";
 import SignUp from "../../components/account/signup";
-import ErrorMessage from "../../components/error-message";
 import AccountDetails from "../../components/account/details";
+import { useAuth } from "../../context/auth-context";
+import { Alert } from "react-native";
 
 export default function Account() {
-  const { loading, login, isAuthenticated, error, sessionId, logout } =
+  const { loading, login, isAuthenticated, sessionId, logout, account } =
     useAuth();
 
   const handleLogout = () => {
     logout();
   };
 
+  const handleLogin = async () => {
+    const resp = await login();
+    console.log("Login response", resp);
+    if (!resp.success) {
+      Alert.alert(
+        "Error",
+        resp.message || "Error al iniciar sesión",
+        [{ text: "OK" }],
+        { cancelable: false },
+      );
+    }
+  };
+
+  console.log("Account screen", {
+    loading,
+    isAuthenticated,
+    sessionId,
+  });
+
   return (
     <ScreenLayout loading={loading}>
-      {error && (
-        <ErrorMessage
-          key={error}
-          message={error}
-          duration={3000}
-          style={{ marginBottom: 20 }}
+      {isAuthenticated && sessionId && (
+        <AccountDetails
+          account={account}
+          sessionId={sessionId}
+          onLogout={handleLogout}
         />
       )}
-
-      {isAuthenticated && sessionId && (
-        <AccountDetails sessionId={sessionId} onLogout={handleLogout} />
-      )}
-      {!isAuthenticated && <SignUp onLogin={login} />}
+      {!isAuthenticated && <SignUp onLogin={handleLogin} />}
     </ScreenLayout>
   );
 }

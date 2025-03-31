@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import ScreenLayout from "../components/screen-layout";
 import { FlatList, Text } from "react-native";
 import { useMovies } from "../hooks/useMovies";
