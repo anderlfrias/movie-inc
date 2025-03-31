@@ -14,6 +14,7 @@ import GenresList from "../components/movie/genres";
 import ActorList from "../components/movie/actors";
 import Rating from "../components/movie/rating";
 import RateMovie from "../components/movie/rate";
+import MovieRecomendations from "../components/movie/recomendations";
 
 export default function MovieDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -138,6 +139,8 @@ export default function MovieDetailsScreen() {
             </Text>
             <ActorList actors={movie.actors} />
           </View>
+
+          <MovieRecomendations movieId={id} />
         </View>
       </ScrollView>
     </ScreenLayout>

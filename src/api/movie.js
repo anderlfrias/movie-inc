@@ -36,3 +36,10 @@ export const apiRateMovie = async (movieId, rating, sessionId) => {
     },
   });
 };
+
+export const apiGetMoviesRecomendatios = async (movieId) => {
+  return await apiRequest({
+    path: `/movie/${movieId}/recommendations`,
+    params: { language: "es-ES" },
+  });
+}
