@@ -14,7 +14,6 @@ export default function Account() {
 
   const handleLogin = async () => {
     const resp = await login();
-    console.log("Login response", resp);
     if (!resp.success) {
       Alert.alert(
         "Error",
@@ -24,13 +23,6 @@ export default function Account() {
       );
     }
   };
-
-  console.log("Account screen", {
-    loading,
-    isAuthenticated,
-    sessionId,
-    account,
-  });
 
   return (
     <ScreenLayout loading={loading}>

@@ -1,20 +1,11 @@
 import { FlatList } from "react-native";
 import ScreenLayout from "../../components/screen-layout";
 import Title from "../../components/title";
-import { useFavoritesMovies } from "../../hooks/useFavoritesMovies";
 import MovieCard from "../../components/movie/card";
-import { useCallback } from "react";
-import { useFocusEffect } from "expo-router";
+import { useFavorites } from "../../context/favorites-context";
 
 export default function Favorite() {
-  const { movies, refetch } = useFavoritesMovies();
-
-  useFocusEffect(
-    useCallback(() => {
-      console.log("Favorite screen - pantalla en foco");
-      refetch();
-    }, [refetch]),
-  );
+  const { movies } = useFavorites();
 
   return (
     <ScreenLayout>
