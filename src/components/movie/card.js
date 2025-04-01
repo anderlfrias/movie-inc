@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import withAnimation from "../../hocs/withAnimation";
 import { formatReleaseDate } from "../../utils/date";
 import { SharedElement } from "react-native-shared-element";
 import Rating from "./rating";
+import MoviePoster from "./poster";
 
 const MovieCard = ({ movie }) => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const MovieCard = ({ movie }) => {
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
           <SharedElement id={`movie.${movie.id}.image`}>
-            <Image source={{ uri: movie.poster.url }} style={styles.poster} />
+            <MoviePoster movie={movie} style={styles.poster} />
           </SharedElement>
         </View>
         <View style={styles.infoContainer}>

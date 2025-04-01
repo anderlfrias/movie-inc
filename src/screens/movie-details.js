@@ -2,7 +2,6 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import {
   ActivityIndicator,
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -51,9 +50,9 @@ export default function MovieDetailsScreen() {
             fontWeight: "bold",
           },
           // eslint-disable-next-line prettier/prettier
-          headerLeft: () => {},
+          headerLeft: () => { },
           // eslint-disable-next-line prettier/prettier
-          headerRight: () => {},
+          headerRight: () => { },
           headerBackTitleVisible: false,
         }}
       />
@@ -103,7 +102,7 @@ export default function MovieDetailsScreen() {
           <GenresList genres={movie.genres} />
 
           <AddMovieToFavorite
-            movieId={id}
+            movie={movie}
             style={{ marginBottom: 32, marginTop: 16 }}
           />
 
