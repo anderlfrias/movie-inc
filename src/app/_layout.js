@@ -1,6 +1,5 @@
-import { Link, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { Image, Text, View } from "react-native";
-import { FavoriteIcon, SearchIcon } from "../components/icons";
 import { AuthProvider } from "../context/auth-context";
 import { FavoritesProvider } from "../context/favorites-context";
 
