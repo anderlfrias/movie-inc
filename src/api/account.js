@@ -14,9 +14,7 @@ export async function apiGetFavoritesMovies(account_id, sessionId) {
   return await apiRequest({
     path: `/account/${account_id}/favorite/movies`,
     method: "GET",
-    params: {
-      session_id: sessionId,
-    },
+    params: { session_id: sessionId, language: "es-ES" },
   });
 }
 

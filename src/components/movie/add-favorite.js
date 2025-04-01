@@ -3,8 +3,12 @@ import Button from "../ui/button";
 import { FavoriteIcon } from "../icons";
 import { useEffect, useState } from "react";
 import { apiGetMovieAccountStates } from "../../api/movie";
-import { apiAddMovieToFavorites } from "../../api/account";
+import {
+  apiAddMovieToFavorites,
+  apiRemoveMovieFromFavorites,
+} from "../../api/account";
 import { useAuth } from "../../context/auth-context";
+import { useFavoritesMovies } from "../../hooks/useFavoritesMovies";
 
 export default function AddMovieToFavorite({ movieId, style }) {
   const {
@@ -12,6 +16,7 @@ export default function AddMovieToFavorite({ movieId, style }) {
     account: { id: accountId },
   } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
+  const { refetch } = useFavoritesMovies();
 
   const onAddFavorite = async () => {
     console.log("Añadir a favoritos", movieId);
@@ -19,6 +24,7 @@ export default function AddMovieToFavorite({ movieId, style }) {
     console.log("resp", resp);
     if (resp.success) {
       setIsFavorite(true);
+      refetch();
     } else {
       console.log("Error al añadir a favoritos", resp.error);
     }
@@ -26,9 +32,14 @@ export default function AddMovieToFavorite({ movieId, style }) {
 
   const onRemoveFavorite = async () => {
     console.log("Eliminar de favoritos", movieId);
-    const resp = await apiAddMovieToFavorites(accountId, sessionId, movieId);
+    const resp = await apiRemoveMovieFromFavorites(
+      accountId,
+      sessionId,
+      movieId,
+    );
     if (resp.success) {
       setIsFavorite(false);
+      refetch();
     } else {
       console.log("Error al eliminar de favoritos", resp.error);
     }

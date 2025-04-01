@@ -12,13 +12,11 @@ export function useFavoritesMovies() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMovies = useCallback(async (sessionId, accountId) => {
-    console.log("useFavoritesMovies.fetchMovies", accountId, sessionId);
+  const fetchMovies = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     const resp = await apiGetFavoritesMovies(accountId, sessionId);
-    console.log("resp", resp);
     if (resp.success) {
       const mappedMovies = resp.data.results.map(mapMovieData);
       setMovies(mappedMovies);
@@ -26,11 +24,11 @@ export function useFavoritesMovies() {
       setError(resp.error.toString());
     }
     setLoading(false);
-  }, []);
+  }, [sessionId, accountId]);
 
   useEffect(() => {
-    fetchMovies(sessionId, accountId);
-  }, [sessionId, accountId, fetchMovies]);
+    fetchMovies();
+  }, [fetchMovies]);
 
   return { movies, loading, error, refetch: fetchMovies };
 }

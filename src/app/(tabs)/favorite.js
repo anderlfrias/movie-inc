@@ -1,26 +1,29 @@
-import { Text, View } from "react-native";
+import { FlatList } from "react-native";
 import ScreenLayout from "../../components/screen-layout";
 import Title from "../../components/title";
 import { useFavoritesMovies } from "../../hooks/useFavoritesMovies";
+import MovieCard from "../../components/movie/card";
+import { useCallback } from "react";
+import { useFocusEffect } from "expo-router";
 
 export default function Favorite() {
-  const { movies } = useFavoritesMovies();
+  const { movies, refetch } = useFavoritesMovies();
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Favorite screen - pantalla en foco");
+      refetch();
+    }, [refetch]),
+  );
+
   return (
     <ScreenLayout>
       <Title text="Mis Favoritos" />
-
-      <Text
-        style={{
-          fontFamily: "monospace",
-          fontSize: 14,
-          backgroundColor: "#eaeaea",
-          padding: 10,
-          borderRadius: 5,
-          color: "#333",
-        }}
-      >
-        {JSON.stringify(movies, null, 2)}
-      </Text>
+      <FlatList
+        data={movies.reverse()} // Invertir el orden de la lista para mostrar los más recientes primero
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <MovieCard movie={item} />}
+      />
     </ScreenLayout>
   );
 }
