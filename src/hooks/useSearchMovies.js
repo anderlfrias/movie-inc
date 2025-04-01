@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { apiGetNowPlayingMovies } from "../api/movie";
+import { apiGetMovies } from "../api/movie";
 import { mapMovieData } from "../utils/mappers";
 
-export function useMovies() {
+export function useSearchMovies() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export function useMovies() {
     setLoading(true);
     setError(null);
 
-    const resp = await apiGetNowPlayingMovies();
+    const resp = await apiGetMovies();
     if (resp.success) {
       const mappedMovies = resp.data.results
         .map(mapMovieData)

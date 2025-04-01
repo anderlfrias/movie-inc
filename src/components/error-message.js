@@ -1,4 +1,3 @@
-// ErrorMessage.js
 import React, { useEffect, useState, useRef } from "react";
 import { Animated, StyleSheet, Text } from "react-native";
 import withAnimation from "../hocs/withAnimation";

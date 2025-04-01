@@ -1,13 +1,13 @@
 import { apiRequest } from ".";
 
-export const getNowPlayingMovies = async () => {
+export const apiGetNowPlayingMovies = async () => {
   return await apiRequest({
     path: "/movie/now_playing",
     params: { language: "es-ES" },
   });
 };
 
-export const getMovieDetails = async (movieId) => {
+export const apiGetMovieDetails = async (movieId) => {
   return await apiRequest({
     path: `/movie/${movieId}`,
     params: { language: "es-ES", append_to_response: "credits" },
@@ -41,5 +41,12 @@ export const apiGetMoviesRecomendatios = async (movieId) => {
   return await apiRequest({
     path: `/movie/${movieId}/recommendations`,
     params: { language: "es-ES" },
+  });
+};
+
+export const apiGetMovies = async (query) => {
+  return await apiRequest({
+    path: "/search/movie",
+    params: { language: "es-ES", query, include_adult: true },
   });
 };
