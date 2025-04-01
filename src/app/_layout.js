@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
-import { Text, View } from "react-native";
+import { Link, Stack } from "expo-router";
+import { Image, Text, View } from "react-native";
 import { FavoriteIcon, SearchIcon } from "../components/icons";
 import { AuthProvider } from "../context/auth-context";
 import { FavoritesProvider } from "../context/favorites-context";
@@ -15,16 +15,23 @@ export default function Layout() {
                 backgroundColor: "#000",
               },
               headerTitle: "",
-              // Aqui se define el logo, pero en este caso solo usare el nombre: Movies Inc.
               headerLeft: () => (
-                <Text style={{ color: "#fff", fontSize: 24, fontWeight: 600 }}>
-                  Movies Inc.
-                </Text>
-              ),
-              headerRight: () => (
-                <View style={{ flexDirection: "row", gap: 10 }}>
-                  <SearchIcon />
-                  <FavoriteIcon />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <Image
+                    source={require("../assets/movies-inc-logo.png")}
+                    style={{ width: 32, height: 32 }}
+                  />
+                  <Text
+                    style={{ color: "#fff", fontSize: 24, fontWeight: 600 }}
+                  >
+                    Movies Inc.
+                  </Text>
                 </View>
               ),
             }}
