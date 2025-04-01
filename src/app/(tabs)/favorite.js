@@ -20,7 +20,7 @@ export default function Favorite() {
     <ScreenLayout>
       <Title text="Mis Favoritos" />
       <FlatList
-        data={movies.reverse()} // Invertir el orden de la lista para mostrar los más recientes primero
+        data={movies}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <MovieCard movie={item} />}
       />

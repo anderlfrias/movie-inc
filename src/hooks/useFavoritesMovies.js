@@ -18,7 +18,8 @@ export function useFavoritesMovies() {
 
     const resp = await apiGetFavoritesMovies(accountId, sessionId);
     if (resp.success) {
-      const mappedMovies = resp.data.results.map(mapMovieData);
+      const mappedMovies = resp.data.results.map(mapMovieData).reverse();
+      // Invertir el orden de la lista para mostrar los más recientes primero
       setMovies(mappedMovies);
     } else {
       setError(resp.error.toString());
