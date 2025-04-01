@@ -70,9 +70,8 @@ export const FavoritesProvider = ({ children }) => {
 
   const fetchFavorites = useCallback(async () => {
     const resp = await apiGetFavoritesMovies(accountId, sessionId);
-    console.log("fetchFavorites.resp", resp);
+
     if (resp.success) {
-      console.log("fetchFavorites.resp.success", resp.success);
       const mappedMovies = resp.data.results.map(mapMovieData).reverse();
       setFavorites(mappedMovies);
     } else {
