@@ -29,6 +29,7 @@ export default function Account() {
     loading,
     isAuthenticated,
     sessionId,
+    account,
   });
 
   return (

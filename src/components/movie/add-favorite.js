@@ -3,11 +3,14 @@ import Button from "../ui/button";
 import { FavoriteIcon } from "../icons";
 import { useEffect, useState } from "react";
 import { apiGetMovieAccountStates } from "../../api/movie";
-import useAuth from "../../hooks/useAuth";
 import { apiAddMovieToFavorites } from "../../api/account";
+import { useAuth } from "../../context/auth-context";
 
 export default function AddMovieToFavorite({ movieId, style }) {
-  const { sessionId, accountId } = useAuth();
+  const {
+    sessionId,
+    account: { id: accountId },
+  } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
 
   const onAddFavorite = async () => {
@@ -33,6 +36,7 @@ export default function AddMovieToFavorite({ movieId, style }) {
 
   useEffect(() => {
     const checkIfFavorite = async () => {
+      console.log("Comprobando si la película está en favoritos", movieId);
       const resp = await apiGetMovieAccountStates(movieId, sessionId);
       if (resp.success) {
         setIsFavorite(resp.data.favorite);
@@ -41,7 +45,8 @@ export default function AddMovieToFavorite({ movieId, style }) {
       }
     };
     checkIfFavorite();
-  }, [movieId]);
+  }, [movieId, sessionId]);
+
   return (
     <View style={style}>
       {isFavorite ? (

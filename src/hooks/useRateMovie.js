@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { apiGetMovieAccountStates, apiRateMovie } from "../api/movie";
-import useAuth from "./useAuth";
 import { Alert } from "react-native";
+import { useAuth } from "../context/auth-context";
 
 export function useRateMovie(movieId) {
-  const { getSession } = useAuth();
+  const { sessionId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [userRating, setUserRating] = useState(null);
 
-  // Obtener la calificación previa del usuario
   useEffect(() => {
-    const fetchUserRating = async () => {
+    const fetchUserRating = async (movieId, sessionId) => {
       setLoading(true);
       setError(null);
-      const sessionId = await getSession();
       if (!sessionId) {
         setLoading(false);
         setError("No se encontró la sesión del usuario.");
@@ -29,15 +27,12 @@ export function useRateMovie(movieId) {
       }
     };
 
-    fetchUserRating();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [movieId]);
+    fetchUserRating(movieId, sessionId);
+  }, [movieId, sessionId]);
 
-  // Función para calificar una película
   const rateMovie = async (rating) => {
     setLoading(true);
     setError(null);
-    const sessionId = await getSession();
     if (!sessionId) {
       setLoading(false);
       // Mostrar alerta de que no hay sesión activa
