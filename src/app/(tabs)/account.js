@@ -3,6 +3,7 @@ import SignUp from "../../components/account/signup";
 import AccountDetails from "../../components/account/details";
 import { useAuth } from "../../context/auth-context";
 import { Alert } from "react-native";
+import AccountFavorites from "../../components/movie/favorites";
 
 export default function Account() {
   const { loading, login, isAuthenticated, sessionId, logout, account } =
@@ -27,11 +28,16 @@ export default function Account() {
   return (
     <ScreenLayout loading={loading}>
       {isAuthenticated && sessionId && (
-        <AccountDetails
-          account={account}
-          sessionId={sessionId}
-          onLogout={handleLogout}
-        />
+        <>
+          <AccountDetails
+            style={{ marginBottom: 36 }}
+            account={account}
+            sessionId={sessionId}
+            onLogout={handleLogout}
+          />
+
+          <AccountFavorites style={{ marginBotton: 24 }} horizontal />
+        </>
       )}
       {!isAuthenticated && <SignUp onLogin={handleLogin} />}
     </ScreenLayout>

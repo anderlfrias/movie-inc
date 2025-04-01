@@ -6,8 +6,29 @@ import { SharedElement } from "react-native-shared-element";
 import Rating from "./rating";
 import MoviePoster from "./poster";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, justPoster }) => {
   const router = useRouter();
+
+  if (justPoster) {
+    return (
+      <Pressable
+        onPress={() => router.push(`/movies/${movie.id}`)}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? "#444" : "#222",
+            ...styles.imageContainer,
+            marginTop: 0,
+            borderRadius: 8,
+          },
+        ]}
+      >
+        <SharedElement id={`movie.${movie.id}.image`}>
+          <MoviePoster movie={movie} style={styles.poster} />
+        </SharedElement>
+      </Pressable>
+    );
+  }
+
   return (
     <Pressable
       onPress={() => router.push(`/movies/${movie.id}`)}

@@ -2,14 +2,9 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { POSTER_URL } from "../../constants";
 
-export default function AccountDetails({ account: user, sessionId, onLogout }) {
-  console.log("AccountDetails", {
-    user,
-    sessionId,
-  });
-
+export default function AccountDetails({ account: user, onLogout, style }) {
   return (
-    <View>
+    <View style={style}>
       {user && (
         <View style={styles.profileContainer}>
           <View style={styles.avatarContainer}>

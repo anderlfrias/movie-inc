@@ -144,9 +144,8 @@ export default function MovieDetailsScreen() {
               Actores
             </Text>
             <ActorList actors={movie.actors} />
+            <MovieRecomendations movieId={id} />
           </View>
-
-          <MovieRecomendations movieId={id} />
         </View>
       </ScrollView>
     </ScreenLayout>

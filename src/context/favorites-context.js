@@ -21,7 +21,13 @@ export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
   const addFavorite = async (movie) => {
-    setFavorites((prevFavorites) => [...prevFavorites, movie]);
+    if (!sessionId || !accountId) {
+      return {
+        success: false,
+        message: "Por favor inicie sesión para poder agregar favoritos",
+      };
+    }
+    setFavorites((prevFavorites) => [movie, ...prevFavorites]);
     const resp = await apiAddMovieToFavorites(accountId, sessionId, movie.id);
     console.log("resp", resp);
     if (!resp.success) {
@@ -34,13 +40,17 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const removeFavorite = async (movieId) => {
+    const prevFavorites = [...favorites]; // Guardamos el estado anterior
+
+    // Verificamos si la película está en favoritos antes de intentar eliminarla
     const movieToRemove = favorites.find((movie) => movie.id === movieId);
     if (!movieToRemove) return;
+
+    // Si la película está en favoritos, la eliminamos del estado
     setFavorites((prevFavorites) =>
       prevFavorites.filter((movie) => movie.id !== movieId),
     );
 
-    console.log("removeFavorite", movieId);
     const resp = await apiRemoveMovieFromFavorites(
       accountId,
       sessionId,
@@ -48,7 +58,7 @@ export const FavoritesProvider = ({ children }) => {
     );
     if (!resp.success) {
       // Si la eliminación falla, revertimos el estado de favoritos
-      setFavorites((prevFavorites) => [...prevFavorites, movieToRemove]);
+      setFavorites(prevFavorites);
     }
 
     return resp;
@@ -60,7 +70,9 @@ export const FavoritesProvider = ({ children }) => {
 
   const fetchFavorites = useCallback(async () => {
     const resp = await apiGetFavoritesMovies(accountId, sessionId);
+    console.log("fetchFavorites.resp", resp);
     if (resp.success) {
+      console.log("fetchFavorites.resp.success", resp.success);
       const mappedMovies = resp.data.results.map(mapMovieData).reverse();
       setFavorites(mappedMovies);
     } else {
@@ -74,7 +86,13 @@ export const FavoritesProvider = ({ children }) => {
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, addFavorite, removeFavorite, isFavorite }}
+      value={{
+        favorites,
+        addFavorite,
+        removeFavorite,
+        isFavorite,
+        refetch: fetchFavorites,
+      }}
     >
       {children}
     </FavoritesContext.Provider>
