@@ -4,7 +4,7 @@
     "slug": "movie-inc",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/movies-inc-logo.png",
+    "icon": "./src/assets/movies-inc-logo512.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "scheme": "movie-inc",
