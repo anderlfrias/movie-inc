@@ -12,6 +12,7 @@ import {
   apiRemoveMovieFromFavorites,
 } from "../api/account";
 import { mapMovieData } from "../utils/mappers";
+import openAlert from "../utils/open-alert";
 
 const FavoritesContext = createContext();
 
@@ -70,7 +71,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const fetchFavorites = useCallback(async () => {
     const resp = await apiGetFavoritesMovies(accountId, sessionId);
-
+    console.log("resp", resp);
     if (resp.success) {
       const mappedMovies = resp.data.results.map(mapMovieData).reverse();
       setFavorites(mappedMovies);

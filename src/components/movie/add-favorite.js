@@ -10,14 +10,14 @@ export default function AddMovieToFavorite({ movie, style }) {
   const handleAddFavorite = async () => {
     const resp = await addFavorite(movie);
     if (!resp.success) {
-      openAlert("Error", "No se pudo añadir a favoritos");
+      openAlert("Error", resp.message || "No se pudo añadir a favoritos");
     }
   };
 
   const handleRemoveFavorite = async () => {
     const resp = await removeFavorite(movie.id);
     if (!resp.success) {
-      openAlert("Error", "No se pudo eliminar de favoritos");
+      openAlert("Error", resp.message || "No se pudo eliminar de favoritos");
     }
   };
 

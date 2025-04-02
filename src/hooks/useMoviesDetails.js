@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { getMovieDetails } from "../api/movie";
 import { mapMovieDetailData } from "../utils/mappers";
+import { apiGetMovieDetails } from "../api/movie";
 
 export function useMovieDetails(movieId) {
   const [movie, setMovie] = useState(null);
@@ -11,7 +11,7 @@ export function useMovieDetails(movieId) {
     setLoading(true);
     setError(null);
 
-    const resp = await getMovieDetails(movieId);
+    const resp = await apiGetMovieDetails(movieId);
 
     if (resp.success) {
       const mappedMovie = mapMovieDetailData(resp.data);
