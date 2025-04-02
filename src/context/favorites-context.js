@@ -12,7 +12,6 @@ import {
   apiRemoveMovieFromFavorites,
 } from "../api/account";
 import { mapMovieData } from "../utils/mappers";
-import openAlert from "../utils/open-alert";
 
 const FavoritesContext = createContext();
 

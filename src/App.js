@@ -25,7 +25,7 @@ export default function App() {
       <StatusBar style="light" />
       <ScreenLayout>
         <Title text="En Cartelera" />
-        <MovieList movies={movies} />
+        <MovieList movies={movies} style={{ marginBottom: 42 }} />
       </ScreenLayout>
     </SafeAreaProvider>
   );

@@ -78,7 +78,9 @@ export default function Search() {
       ) : loading ? (
         <Text style={styles.placeholder}>Buscando películas...</Text>
       ) : query === "" ? (
-        <Text style={styles.placeholder}>Escribe algo para buscar</Text>
+        <Text style={styles.placeholder}>
+          Encuentra las mejores películas aquí...
+        </Text>
       ) : movies.length === 0 ? (
         <Text style={styles.placeholder}>
           No se encontraron películas para "{query}"
