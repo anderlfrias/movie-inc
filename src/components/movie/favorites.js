@@ -5,7 +5,6 @@ import { useFavorites } from "../../context/favorites-context";
 
 export default function FavoritesList({ style, horizontal }) {
   const { favorites } = useFavorites();
-  console.log(favorites);
   return (
     <View style={style}>
       <Title text="Favorites" />

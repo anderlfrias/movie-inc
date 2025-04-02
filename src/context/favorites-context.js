@@ -29,7 +29,6 @@ export const FavoritesProvider = ({ children }) => {
     }
     setFavorites((prevFavorites) => [movie, ...prevFavorites]);
     const resp = await apiAddMovieToFavorites(accountId, sessionId, movie.id);
-    console.log("resp", resp);
     if (!resp.success) {
       setFavorites((prevFavorites) =>
         prevFavorites.filter((favMovie) => favMovie.id !== movie.id),
@@ -75,6 +74,7 @@ export const FavoritesProvider = ({ children }) => {
       const mappedMovies = resp.data.results.map(mapMovieData).reverse();
       setFavorites(mappedMovies);
     } else {
+      setFavorites([]);
       console.log("Error al obtener los favoritos");
     }
   }, [accountId, sessionId]);
