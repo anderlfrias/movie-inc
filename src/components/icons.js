@@ -28,3 +28,7 @@ export const AddUserIcon = (props) => (
 export const ErrorIcon = (props) => (
   <AntDesign name="warning" size={24} color="white" {...props} />
 );
+
+export const CloseIcon = (props) => (
+  <AntDesign name="close" size={24} color="white" {...props} />
+);

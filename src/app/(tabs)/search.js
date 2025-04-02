@@ -1,7 +1,7 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import ScreenLayout from "../../components/screen-layout";
-import { use, useEffect, useState } from "react";
-import { SearchIcon } from "../../components/icons";
+import { useCallback, useState } from "react";
+import { CloseIcon, SearchIcon } from "../../components/icons";
 import { apiGetMovies } from "../../api/movie";
 import { mapMovieData } from "../../utils/mappers";
 import ErrorMessage from "../../components/error-message";
@@ -14,18 +14,26 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const onChangeQuery = (text) => {
+  const onChangeQuery = async (text) => {
+    setLoading(true);
     setQuery(text);
-    debouncedSearch(text);
+    debouncedSearchMovies(text);
   };
 
-  const searchMovies = async (text) => {
-    if (!text.trim()) return;
+  const clearSearch = () => {
+    setQuery("");
+    setMovies([]);
+    setLoading(false);
+    setError(null);
+  };
 
+  const searchMovies = useCallback(async (query) => {
+    if (query.trim() === "") return clearSearch();
     setLoading(true);
     setError(null);
 
-    const resp = await apiGetMovies(text);
+    const resp = await apiGetMovies(query);
+    setLoading(false);
     if (resp.success) {
       const mappedMovies = resp.data.results
         .map(mapMovieData)
@@ -33,32 +41,19 @@ export default function Search() {
 
       setMovies(mappedMovies);
     } else {
-      setError(resp.error.toString());
+      setError(resp.message || resp.error.toString() || "Error desconocido");
     }
-    setLoading(false);
-  };
+  }, []);
 
-  const debouncedSearch = debounce(searchMovies, 500);
-
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     const resp = await apiGetMovies(query);
-  //     if (resp.success) {
-  //       const mappedMovies = resp.data.results
-  //         .map(mapMovieData)
-  //         .sort((a, b) => a.title.localeCompare(b.title));
-
-  //       setMovies(mappedMovies);
-  //     } else {
-  //       setError(resp.error.toString());
-  //     }
-  //   };
-
-  //   fetchMovies();
-  // }, [query]);
+  const debouncedSearchMovies = useCallback(
+    debounce((q) => {
+      searchMovies(q);
+    }, 500),
+    [searchMovies],
+  );
 
   return (
-    <ScreenLayout loading={loading} error={error}>
+    <ScreenLayout error={error}>
       <View style={styles.container}>
         <SearchIcon color="#bbb" style={styles.icon} />
         <TextInput
@@ -67,12 +62,28 @@ export default function Search() {
           placeholderTextColor="#aaa"
           value={query}
           onChangeText={onChangeQuery}
-          onSubmitEditing={searchMovies}
-          onBlur={searchMovies}
+          onSubmitEditing={() => searchMovies(query)}
+          onBlur={() => searchMovies(query)}
           returnKeyType="search"
         />
+        {query.length > 0 && (
+          <Pressable onPress={clearSearch} style={styles.clearButton}>
+            <CloseIcon color="#bbb" size={20} />
+          </Pressable>
+        )}
       </View>
-      {error && <ErrorMessage message={error} />}
+
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : loading ? (
+        <Text style={styles.placeholder}>Buscando películas...</Text>
+      ) : query === "" ? (
+        <Text style={styles.placeholder}>Escribe algo para buscar</Text>
+      ) : movies.length === 0 ? (
+        <Text style={styles.placeholder}>
+          No se encontraron películas para "{query}"
+        </Text>
+      ) : null}
 
       <MovieList movies={movies} />
     </ScreenLayout>
@@ -80,15 +91,6 @@ export default function Search() {
 }
 
 const styles = StyleSheet.create({
-  // input: {
-  //   height: 40,
-  //   borderColor: "#ccc",
-  //   borderWidth: 1,
-  //   borderRadius: 8,
-  //   paddingHorizontal: 10,
-  //   marginBottom: 10,
-  //   color: "#fff",
-  // },
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -107,5 +109,11 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "#fff",
     fontSize: 16,
+  },
+  placeholder: {
+    color: "#aaa",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
   },
 });
